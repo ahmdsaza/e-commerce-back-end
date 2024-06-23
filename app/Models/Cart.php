@@ -12,7 +12,8 @@ class Cart extends Model
     protected $fillable = [
         'user_id',
         'product_id',
-        'product_qty'
+        'product_qty',
+        'product_image'
     ];
 
     // protected $with = ['user'];
