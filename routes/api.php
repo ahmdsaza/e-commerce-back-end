@@ -57,6 +57,8 @@ Route::get('/top-rated', [ProductController::class, 'getTopRated']);
 Route::middleware('auth:api')->group(function () {
     // Cart
     Route::get('/carts', [CartController::class, 'index']);
+    Route::delete('/carts/{id}', [CartController::class, 'destroy']);
+
     // Users
     Route::get('/user', [UsersContoller::class, 'authUser']);
     Route::middleware('checkAdmin')->controller(UsersContoller::class)->group(function () {

@@ -36,4 +36,9 @@ class CartController extends Controller
             return response()->json(['status' => 401, 'meassge' => 'Login to Add to Cart control']);
         }
     }
+
+    public function destroy($id)
+    {
+        return  Cart::findOrFail($id)->delete();
+    }
 }
