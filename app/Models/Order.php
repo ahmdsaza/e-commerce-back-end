@@ -23,4 +23,9 @@ class Order extends Model
         'status',
         'remark',
     ];
+
+    public function OrderItems()
+    {
+        return $this->hasMany(OrderItems::class, 'order_id', 'id');
+    }
 }

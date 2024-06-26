@@ -34,12 +34,33 @@ class CheckoutController extends Controller
             $order->address = $request->address;
             $order->city = $request->city;
             $order->zipcode = $request->zipcode;
-            $order->papayment_mode = $request->payment_mode;
+            $order->payment_mode = $request->payment_mode;
 
             $order->tracking_no = rand(1111, 9999);
             $order->save();
 
             $cart = Cart::where('user_id', $user_id)->get();
+
+            $orderitems = [];
+            foreach ($cart as $item) {
+                $orderitems[] = [
+                    'product_id' => $item->product_id,
+                    'qty' => $item->product_qty,
+                    'price' => $item->product->discount,
+                ];
+
+                $item->product->update([
+                    'qty' => $item->product->qty - $item->product_qty
+                ]);
+            }
+
+            $order->orderitems()->createMany($orderitems);
+            Cart::destroy($cart);
+        } else {
+            return response()->json()([
+                'status' => 401,
+                'message' => 'Login First'
+            ]);
         }
     }
 }

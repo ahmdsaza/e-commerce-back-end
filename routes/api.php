@@ -61,7 +61,7 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/carts/{id}', [CartController::class, 'destroy']);
 
     // Check Out
-    Route::delete('/place-order', [CheckoutController::class, 'placeorder']);
+    Route::post('/place-order', [CheckoutController::class, 'placeorder']);
 
 
     // Users
