@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\socialAuthController;
@@ -58,6 +59,10 @@ Route::middleware('auth:api')->group(function () {
     // Cart
     Route::get('/carts', [CartController::class, 'index']);
     Route::delete('/carts/{id}', [CartController::class, 'destroy']);
+
+    // Check Out
+    Route::delete('/place-order', [CheckoutController::class, 'placeorder']);
+
 
     // Users
     Route::get('/user', [UsersContoller::class, 'authUser']);

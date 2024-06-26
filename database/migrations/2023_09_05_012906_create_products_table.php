@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('price');
             $table->string('discount')->default(0);
             $table->text('About');
+            $table->integer('qty');
             $table->string('status')->default('draft');
             $table->foreign('category')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

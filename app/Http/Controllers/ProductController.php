@@ -61,17 +61,21 @@ class ProductController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
+            'qty' => 'required',
             'price' => 'required | numeric',
             'discount' => 'required | numeric',
             'About' => 'required'
+
         ]);
         $productCreated = $product->create([
             'category' => $request->category,
             'title' => $request->title,
             'description' => $request->description,
+            'qty' => $request->qty,
             'price' => $request->price,
             'About' => $request->About,
-            'discount' => $request->discount,
+            'discount' => $request->discount
+
         ]);
         return $productCreated;
     }
@@ -104,7 +108,8 @@ class ProductController extends Controller
             'description' => 'required',
             'price' => 'required | numeric',
             'discount' => 'required | numeric',
-            'About' => 'required'
+            'About' => 'required',
+            'qty' => 'required'
         ]);
         $product->update([
             'category' => $request->category,
@@ -113,6 +118,7 @@ class ProductController extends Controller
             'price' => $request->price,
             'About' => $request->About,
             'discount' => $request->discount,
+            'qty' => $request->qty
 
         ]);
         $product->status = 'published';
