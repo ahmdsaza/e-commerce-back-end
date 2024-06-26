@@ -37,6 +37,20 @@ class CartController extends Controller
         }
     }
 
+    public function updatequantity($qty_id, $scope)
+    {
+        if (auth()->user()) {
+            $user_id = Auth::user()->id;
+            $cartitem = Cart::where('id', $qty_id)->where('user_id', $user_id)->first();
+            if ($scope == 'inc') {
+                $cartitem->product_qty += 1;
+            } else if ($scope == 'dec') {
+                $cartitem->product_qty -= 1;
+            }
+            $cartitem->update();
+        }
+    }
+
     public function destroy($id)
     {
         return  Cart::findOrFail($id)->delete();
