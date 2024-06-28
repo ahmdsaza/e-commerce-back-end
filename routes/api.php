@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\socialAuthController;
@@ -61,10 +62,12 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/carts/{id}', [CartController::class, 'destroy']);
     Route::put('/cart-updateqty/{qty_id}/{scope}', [CartController::class, 'updatequantity']);
 
-
     // Check Out
     Route::post('/place-order', [CheckoutController::class, 'placeorder']);
 
+    // Orders
+    Route::get('/orders', [OrderController::class, 'index']);
+    Route::get('/order/{id}', [OrderController::class, 'show']);
 
     // Users
     Route::get('/user', [UsersContoller::class, 'authUser']);

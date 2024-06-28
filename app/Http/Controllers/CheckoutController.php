@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
+
     public function placeorder(Request $request)
     {
         if (auth()->user()) {
