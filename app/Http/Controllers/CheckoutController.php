@@ -46,6 +46,8 @@ class CheckoutController extends Controller
             foreach ($cart as $item) {
                 $orderitems[] = [
                     'product_id' => $item->product_id,
+                    'product_title' => $item->product->title,
+                    'product_image' => $item->product_image,
                     'qty' => $item->product_qty,
                     'price' => $item->product->discount,
                 ];

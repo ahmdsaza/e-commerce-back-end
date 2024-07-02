@@ -68,6 +68,7 @@ Route::middleware('auth:api')->group(function () {
     // Orders
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/order/{id}', [OrderController::class, 'show']);
+    Route::get('/get-order', [OrderController::class, 'showorders']);
 
     // Users
     Route::get('/user', [UsersContoller::class, 'authUser']);

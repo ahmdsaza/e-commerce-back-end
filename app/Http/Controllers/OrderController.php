@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrderItems;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,6 +17,10 @@ class OrderController extends Controller
     }
     public function show($id)
     {
-        return Order::where('id', $id)->with('OrderItems')->get();
+        return  Order::where('id', $id)->with('OrderItems')->get();
+    }
+    public function showorders()
+    {
+        return Order::with('OrderItems')->get();
     }
 }
