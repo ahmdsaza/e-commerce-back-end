@@ -20,20 +20,39 @@ class CartController extends Controller
     {
         if (auth()->user()) {
 
+
             $user_id = $request->user_id;
             $product_id = $request->product_id;
+            $upadteqty = Cart::where('user_id', $user_id)->where('product_id', $product_id)->first();
+            $upadteqtyedit = Cart::where('user_id', $user_id)->where('product_id', $product_id)->first();
             $product_qty = $request->product_qty;
             $product_image = $request->product_image;
 
-            $cartitem = new Cart;
-            $cartitem->user_id = $user_id;
-            $cartitem->product_id = $product_id;
-            $cartitem->product_qty = $product_qty;
-            $cartitem->product_image = $product_image;
+            if ($upadteqty) {
+                $request->validate([
+                    'user_id' => 'required',
+                    'product_id' => 'required',
+                    'product_qty' => 'required',
+                    'product_image' => 'required'
+                ]);
+                $upadteqty->update([
+                    'user_id' => $request->user_id,
+                    'product_id' => $request->product_id,
+                    'product_qty' =>  $request->product_qty + $upadteqtyedit->product_qty,
+                    'product_image' => $request->product_image
+                ]);
+                $upadteqty->save();
+            } else {
+                $cartitem = new Cart;
+                $cartitem->user_id = $user_id;
+                $cartitem->product_id = $product_id;
+                $cartitem->product_qty = $product_qty;
+                $cartitem->product_image = $product_image;
 
-            $cartitem->save();
+                $cartitem->save();
+            }
         } else {
-            return response()->json(['status' => 401, 'meassge' => 'Login to Add to Cart control']);
+            return response()->json(['status' => 401, 'meassge' => 'Login to Add to Cart']);
         }
     }
 
