@@ -23,4 +23,8 @@ class OrderController extends Controller
     {
         return Order::with('OrderItems')->get();
     }
+    public function destroy($id)
+    {
+        return  Order::findOrFail($id)->delete();
+    }
 }
