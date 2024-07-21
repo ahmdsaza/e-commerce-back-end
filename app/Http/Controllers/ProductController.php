@@ -119,7 +119,6 @@ class ProductController extends Controller
             'About' => $request->About,
             'discount' => $request->discount,
             'qty' => $request->qty
-
         ]);
         $product->status = 'published';
         $product->save();

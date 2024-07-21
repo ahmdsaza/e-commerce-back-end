@@ -69,7 +69,9 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/order/{id}', [OrderController::class, 'show']);
     Route::get('/get-order', [OrderController::class, 'showorders']);
+    Route::post('/orders/edit/{id}', [OrderController::class, 'update']);
     Route::delete('/order/{id}', [OrderController::class, 'destroy']);
+
 
     // Users
     Route::get('/user', [UsersContoller::class, 'authUser']);

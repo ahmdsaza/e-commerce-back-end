@@ -27,4 +27,15 @@ class OrderController extends Controller
     {
         return  Order::findOrFail($id)->delete();
     }
+    public function update(Request $request, $id)
+    {
+        $order = Order::findOrFail($id);
+        $request->validate([
+            'status' => 'required'
+        ]);
+        $order->update([
+            'status' => $request->status,
+        ]);
+        $order->save();
+    }
 }
