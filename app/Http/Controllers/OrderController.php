@@ -12,16 +12,26 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $user_id = Auth::user()->id;
+
+        // $allProducts = Order::with('OrderItems')->get();
         $allorders = Order::with('OrderItems')->where('user_id', $user_id)->get();
+        $orders = Order::with('OrderItems')->paginate($request->input('limit', 10));
+        $finalResult = $request->input('limit') ? $orders : $allorders;
+        return $finalResult;
+
         return $allorders;
     }
     public function show($id)
     {
         return  Order::where('id', $id)->with('OrderItems')->get();
     }
-    public function showorders()
+    public function showorders(Request $request)
     {
-        return Order::with('OrderItems')->get();
+        $allorders = Order::with('OrderItems')->get();
+        $orders = Order::with('OrderItems')->paginate($request->input('limit', 10));
+        $finalResult = $request->input('limit') ? $orders : $allorders;
+        return $finalResult;
+        // return Order::with('OrderItems')->get();
     }
     public function destroy($id)
     {
