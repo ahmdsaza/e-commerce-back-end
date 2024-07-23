@@ -31,7 +31,6 @@ class OrderController extends Controller
         $orders = Order::with('OrderItems')->paginate($request->input('limit', 10));
         $finalResult = $request->input('limit') ? $orders : $allorders;
         return $finalResult;
-        // return Order::with('OrderItems')->get();
     }
     public function destroy($id)
     {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,29 +20,30 @@ class CartController extends Controller
     public function addToCart(Request $request)
     {
         if (auth()->user()) {
-
-
             $user_id = $request->user_id;
             $product_id = $request->product_id;
+            $product_qty_check = Product::where('id', $product_id)->first();
+            $call_product_qty_check = $product_qty_check->qty;
             $upadteqty = Cart::where('user_id', $user_id)->where('product_id', $product_id)->first();
-            $upadteqtyedit = Cart::where('user_id', $user_id)->where('product_id', $product_id)->first();
             $product_qty = $request->product_qty;
             $product_image = $request->product_image;
 
             if ($upadteqty) {
-                $request->validate([
-                    'user_id' => 'required',
-                    'product_id' => 'required',
-                    'product_qty' => 'required',
-                    'product_image' => 'required'
-                ]);
-                $upadteqty->update([
-                    'user_id' => $request->user_id,
-                    'product_id' => $request->product_id,
-                    'product_qty' =>  $request->product_qty + $upadteqtyedit->product_qty,
-                    'product_image' => $request->product_image
-                ]);
-                $upadteqty->save();
+                $upadteqtycount = $upadteqty->product_qty + $product_qty;
+
+                if ($call_product_qty_check >= $upadteqtycount) {
+
+                    $request->validate([
+                        'product_qty' => 'required',
+                    ]);
+                    $upadteqty->update([
+                        'product_qty' =>  $request->product_qty + $upadteqty->product_qty,
+                    ]);
+
+                    $upadteqty->save();
+                } else {
+                    return response()->json(['status' => 401, 'meassge' => 'No Quantity enough']);
+                }
             } else {
                 $cartitem = new Cart;
                 $cartitem->user_id = $user_id;
