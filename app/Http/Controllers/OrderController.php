@@ -12,10 +12,8 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $user_id = Auth::user()->id;
-
-        // $allProducts = Order::with('OrderItems')->get();
         $allorders = Order::with('OrderItems')->where('user_id', $user_id)->get();
-        $orders = Order::with('OrderItems')->paginate($request->input('limit', 10));
+        $orders = Order::with('OrderItems')->where('user_id', $user_id)->paginate($request->input('limit', 10));
         $finalResult = $request->input('limit') ? $orders : $allorders;
         return $finalResult;
 

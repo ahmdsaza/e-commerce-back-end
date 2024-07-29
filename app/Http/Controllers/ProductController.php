@@ -32,7 +32,7 @@ class ProductController extends Controller
 
     public function getLatest(Request $request)
     {
-        $products = Product::with('Images')->where('status', '=', 'published')->latest()->take(6)->get();
+        $products = Product::with('Images')->where('status', '=', 'published')->latest()->take(8)->get();
         return $products;
     }
 

@@ -41,19 +41,14 @@ Route::get('/auth/google/callback', [socialAuthController::class, 'handleCallbac
 Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/category/{id}', [CategoryController::class, 'show']);
 Route::get('/categorry/{id}', [CategoryController::class, 'productsCategory']);
-Route::get('/products', [ProductController::class, 'index']);
-Route::get('/product/{id}', [ProductController::class, 'show']);
 
 // Products
 Route::get('/latest-sale', [ProductController::class, 'getLastSaleProducts']);
 Route::get('/latest', [ProductController::class, 'getLatest']);
 Route::get('/top-rated', [ProductController::class, 'getTopRated']);
-
-// Cart
-// Route::get('/carts', [CartController::class, 'index']);
-// Route::middleware('checkCart')->controller(CartController::class)->group(function () {
-//     Route::post('/add-to-cart', 'addToCart');
-// });
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/product/{id}', [ProductController::class, 'show']);
+Route::post('/product/search', [ProductController::class, 'search']);
 
 // Protected Routes
 Route::middleware('auth:api')->group(function () {
@@ -72,7 +67,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/orders/edit/{id}', [OrderController::class, 'update']);
     Route::delete('/order/{id}', [OrderController::class, 'destroy']);
 
-
     // Users
     Route::get('/user', [UsersContoller::class, 'authUser']);
     Route::middleware('checkAdmin')->controller(UsersContoller::class)->group(function () {
@@ -85,8 +79,6 @@ Route::middleware('auth:api')->group(function () {
     });
     // Product Manger
     Route::middleware('checkProductManager')->controller(CategoryController::class)->group(function () {
-
-        // Route::get('/category/{id}', 'show');
         Route::post('/category/search', 'search');
         Route::post('/category/edit/{id}', 'edit');
         Route::post('/category/add', 'store');
@@ -94,7 +86,6 @@ Route::middleware('auth:api')->group(function () {
     });
 
     Route::middleware('checkProductManager')->controller(ProductController::class)->group(function () {
-        Route::post('/product/search', 'search');
         Route::post('/product/edit/{id}', 'update');
         Route::post('/product/add', 'store');
         Route::delete('/product/{id}', 'destroy');
