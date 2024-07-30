@@ -42,7 +42,8 @@ class CartController extends Controller
 
                     $upadteqty->save();
                 } else {
-                    return response()->json(['status' => 401, 'meassge' => 'No Quantity enough']);
+                    // return response()->json(['status' => 401, 'meassge' => 'No Quantity enough']);
+                    return response()->json(['error' => 'No Quantity enough'], 420);
                 }
             } else {
                 $cartitem = new Cart;
