@@ -54,19 +54,18 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Category $category, $id)
+    public function show(Request $request, $id)
     {
-        // return Category::findOrFail($id);
-        return Product::where('category', $id)->with('Images')->where('status', '=', 'published')->get();
+
+        $allproducts = Product::where('category', $id)->with('Images')->where('status', '=', 'published')->get();
+        $products = Product::where('category', $id)->with('Images')->where('status', '=', 'published')->paginate($request->input('limit', 10));
+        $finalResult = $request->input('limit') ? $products : $allproducts;
+        return $finalResult;
     }
 
     public function productsCategory(Category $category, $id)
     {
-        // $categories = Category::all();
-        // $products = Product::all();
-        // return Category::where('id', $id)->where('status', '=', 'published')->get();
         return Category::findOrFail($id);
-        // return Category::findOrFail($id);
     }
 
     /**
