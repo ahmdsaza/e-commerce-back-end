@@ -25,10 +25,12 @@ class OrderController extends Controller
     }
     public function showorders(Request $request)
     {
-        $allorders = Order::with('OrderItems')->get();
+        // $allorders = Order::with('OrderItems')->get();
         $orders = Order::with('OrderItems')->paginate($request->input('limit', 10));
-        $finalResult = $request->input('limit') ? $orders : $allorders;
-        return $finalResult;
+        $query = $request->input('status');
+        $orderssort = Order::with('OrderItems')->where('status', '=', $query)->paginate($request->input('limit', 10));
+        $finalResult = $orderssort;
+        return $query ? $finalResult : $orders;
     }
     public function destroy($id)
     {
