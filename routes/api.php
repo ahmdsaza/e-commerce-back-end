@@ -7,6 +7,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImageController;
+use App\Http\Controllers\RateController;
 use App\Http\Controllers\socialAuthController;
 use App\Http\Controllers\UsersContoller;
 
@@ -49,6 +50,12 @@ Route::get('/top-rated', [ProductController::class, 'getTopRated']);
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/product/{id}', [ProductController::class, 'show']);
 Route::post('/product/search', [ProductController::class, 'search']);
+
+// Rates
+
+Route::post('/rate/add', [RateController::class, 'store']);
+Route::get('/rates/{id}', [RateController::class, 'show']);
+
 
 // Protected Routes
 Route::middleware('auth:api')->group(function () {

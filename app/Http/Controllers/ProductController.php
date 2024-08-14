@@ -16,8 +16,8 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $allProducts = Product::with('Images')->get();
-        $products = Product::with('Images')->where('status', '=', 'published')->paginate($request->input('limit', 10));
+        $allProducts = Product::with('Images')->with('Rate')->get();
+        $products = Product::with('Images')->with('Rate')->where('status', '=', 'published')->paginate($request->input('limit', 10));
         $finalResult = $request->input('limit') ? $products : $allProducts;
         return $finalResult;
     }
@@ -25,20 +25,20 @@ class ProductController extends Controller
 
     public function getLastSaleProducts(Request $request)
     {
-        $products = Product::with('Images')->where('status', '=', 'published')->where('discount', '>', '0')->latest()->take(8)->get();
+        $products = Product::with('Images')->with('Rate')->where('status', '=', 'published')->where('discount', '>', '0')->latest()->take(8)->get();
         return $products;
     }
 
 
     public function getLatest(Request $request)
     {
-        $products = Product::with('Images')->where('status', '=', 'published')->latest()->take(8)->get();
+        $products = Product::with('Images')->with('Rate')->where('status', '=', 'published')->latest()->take(8)->get();
         return $products;
     }
 
     public function getTopRated(Request $request)
     {
-        $products = Product::with('Images')->where('status', '=', 'published')->where('rating', '=', '5')->latest()->take(10)->get();
+        $products = Product::with('Images')->with('Rate')->where('status', '=', 'published')->where('rating', '=', '5')->latest()->take(10)->get();
         return $products;
     }
 
@@ -85,7 +85,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return Product::where('id', $id)->with('Images')->where('status', '=', 'published')->get();
+        return Product::where('id', $id)->with('Images')->with('Rate')->where('status', '=', 'published')->get();
     }
 
     /**

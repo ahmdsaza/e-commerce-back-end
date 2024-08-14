@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\ProductImage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class CategoryController extends Controller
@@ -58,7 +56,7 @@ class CategoryController extends Controller
     {
 
         $allproducts = Product::where('category', $id)->with('Images')->where('status', '=', 'published')->get();
-        $products = Product::where('category', $id)->with('Images')->where('status', '=', 'published')->paginate($request->input('limit', 10));
+        // $products = Product::where('category', $id)->with('Images')->where('status', '=', 'published')->paginate($request->input('limit', 10));
         $productsSort = Product::where('category', $id)->with('Images')->where('status', '=', 'published')->orderBy($request->input('sort'), $request->input('type'))->paginate($request->input('limit', 10));
         $finalResult = $request->input('sort') ? $productsSort : $allproducts;
         return $finalResult;

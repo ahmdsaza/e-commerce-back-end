@@ -17,7 +17,7 @@ class OrderController extends Controller
         $finalResult = $request->input('limit') ? $orders : $allorders;
         return $finalResult;
 
-        return $allorders;
+        // return $allorders;
     }
     public function show($id)
     {
