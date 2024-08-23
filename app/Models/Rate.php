@@ -15,4 +15,9 @@ class Rate extends Model
         'product_rate',
         'description'
     ];
+
+    public function users()
+    {
+        return $this->hasMany(User::class,  'id', 'user_id');
+    }
 }
