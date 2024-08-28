@@ -52,10 +52,8 @@ Route::get('/product/{id}', [ProductController::class, 'show']);
 Route::post('/product/search', [ProductController::class, 'search']);
 
 // Rates
-
 Route::post('/rate/add', [RateController::class, 'store']);
 Route::get('/rates/{id}', [RateController::class, 'show']);
-
 
 // Protected Routes
 Route::middleware('auth:api')->group(function () {
