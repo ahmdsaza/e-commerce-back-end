@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Rate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,13 +32,19 @@ class RateController extends Controller
             'description' => $request->description,
         ]);
         $ratecreate->save();
+
+        $ratecount = Rate::where('product_id', $request->product_id)->count();
+        $ratestarcount = Rate::where('product_id', $request->product_id)->sum('product_rate');
+        $calcualterates = $ratestarcount / $ratecount;
+
+        $product = Product::findOrFail($request->product_id);
+        $product->rating = $calcualterates;
+        $product->save();
     }
 
     public function show(Request $request)
     {
         $allrates = Rate::with('users')->where('product_id', $request->id)->limit('8')->get();
-        $ratecount = Rate::where('product_id', $request->id)->count();
-
         return $allrates;
     }
 }
