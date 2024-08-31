@@ -15,7 +15,7 @@ class CheckAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->user() && auth()->user()->role !== '1995') {
+        if (auth()->user() && auth()->user()->role !== '1995' && auth()->user()->role !== '2001') {
             return new Response('Forbidden', 403);
         }
         return $next($request);

@@ -64,6 +64,18 @@ class UsersContoller extends Controller
         $user->save();
     }
 
+    public function editProfileUser(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+        ]);
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->save();
+    }
+
     // Search On Users
     public function search(Request $request)
     {

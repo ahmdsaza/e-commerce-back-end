@@ -32,6 +32,11 @@ class OrderController extends Controller
         $finalResult = $orderssort;
         return $query ? $finalResult : $orders;
     }
+    public function showorderscount()
+    {
+        $orders = Order::count();
+        return $orders;
+    }
     public function destroy($id)
     {
         return  Order::findOrFail($id)->delete();

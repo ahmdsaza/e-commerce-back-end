@@ -55,6 +55,10 @@ Route::post('/product/search', [ProductController::class, 'search']);
 Route::post('/rate/add', [RateController::class, 'store']);
 Route::get('/rates/{id}', [RateController::class, 'show']);
 
+// Profile
+
+Route::post('/profile-edit/{id}', [UsersContoller::class, 'editProfileUser']);
+
 // Protected Routes
 Route::middleware('auth:api')->group(function () {
     // Cart
@@ -69,6 +73,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/order/{id}', [OrderController::class, 'show']);
     Route::get('/get-order', [OrderController::class, 'showorders']);
+    Route::get('/get-order-count', [OrderController::class, 'showorderscount']);
     Route::post('/orders/edit/{id}', [OrderController::class, 'update']);
     Route::delete('/order/{id}', [OrderController::class, 'destroy']);
 
