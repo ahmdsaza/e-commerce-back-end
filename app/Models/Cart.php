@@ -16,13 +16,7 @@ class Cart extends Model
         'product_image'
     ];
 
-    // protected $with = ['user'];
-    // public function user()
-    // {
-    //     return $this->belongsTo(User::class);
-    // }
-
-    protected $with = ['product'];
+    protected $with = ['product', 'Images'];
     public function Product()
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
@@ -30,6 +24,6 @@ class Cart extends Model
 
     public function Images()
     {
-        return $this->hasMany(ProductImage::class);
+        return $this->hasMany(ProductImage::class, 'product_id', 'product_id');
     }
 }

@@ -57,6 +57,7 @@ Route::post('/rate/add', [RateController::class, 'store']);
 Route::get('/rates/{id}', [RateController::class, 'show']);
 Route::get('/rateshow/{id}', [RateController::class, 'rateshow']);
 Route::post('/rate/edit/{id}', [RateController::class, 'update']);
+Route::delete('/rate/{id}', [RateController::class, 'destroy']);
 
 // Profile
 Route::post('/profile-edit/{id}', [UsersContoller::class, 'editProfileUser']);

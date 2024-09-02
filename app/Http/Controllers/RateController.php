@@ -24,13 +24,15 @@ class RateController extends Controller
             'user_id' => 'required',
             'product_id' => 'required',
             'product_rate' => 'required',
-            'description' => 'nullable'
+            'description' => 'nullable',
+            'status' => 'required'
         ]);
         $ratecreate = $rate->create([
             'user_id' => $request->user_id,
             'product_id' => $request->product_id,
             'product_rate' => $request->product_rate,
             'description' => $request->description,
+            'status' => $request->status
         ]);
         $ratecreate->save();
 
@@ -45,7 +47,7 @@ class RateController extends Controller
 
     public function show(Request $request)
     {
-        $allrates = Rate::with('users')->where('product_id', $request->id)->limit('8')->get();
+        $allrates = Rate::with('users')->where('status', '=', '0')->where('product_id', $request->id)->limit('8')->get();
         return $allrates;
     }
 
@@ -65,5 +67,10 @@ class RateController extends Controller
             'status' => $request->status,
         ]);
         $rate->save();
+    }
+
+    public function destroy($id)
+    {
+        return Rate::findOrFail($id)->delete();
     }
 }

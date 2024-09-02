@@ -13,7 +13,7 @@ class CartController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user()->id;
-        $allCarts = Cart::where('user_id', $user)->get();
+        $allCarts = Cart::with('Images')->where('user_id', $user)->get();
         return  $allCarts;
     }
 
@@ -26,7 +26,7 @@ class CartController extends Controller
             $call_product_qty_check = $product_qty_check->qty;
             $upadteqty = Cart::where('user_id', $user_id)->where('product_id', $product_id)->first();
             $product_qty = $request->product_qty;
-            $product_image = $request->product_image;
+            // $product_image = $request->product_image;
 
             if ($upadteqty) {
                 $upadteqtycount = $upadteqty->product_qty + $product_qty;
@@ -50,7 +50,7 @@ class CartController extends Controller
                 $cartitem->user_id = $user_id;
                 $cartitem->product_id = $product_id;
                 $cartitem->product_qty = $product_qty;
-                $cartitem->product_image = $product_image;
+                $cartitem->product_image = $product_id;
 
                 $cartitem->save();
             }
@@ -75,6 +75,6 @@ class CartController extends Controller
 
     public function destroy($id)
     {
-        return  Cart::findOrFail($id)->delete();
+        return Cart::findOrFail($id)->delete();
     }
 }
