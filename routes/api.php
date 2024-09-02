@@ -52,11 +52,13 @@ Route::get('/product/{id}', [ProductController::class, 'show']);
 Route::post('/product/search', [ProductController::class, 'search']);
 
 // Rates
+Route::get('/rate', [RateController::class, 'index']);
 Route::post('/rate/add', [RateController::class, 'store']);
 Route::get('/rates/{id}', [RateController::class, 'show']);
+Route::get('/rateshow/{id}', [RateController::class, 'rateshow']);
+Route::post('/rate/edit/{id}', [RateController::class, 'update']);
 
 // Profile
-
 Route::post('/profile-edit/{id}', [UsersContoller::class, 'editProfileUser']);
 
 // Protected Routes

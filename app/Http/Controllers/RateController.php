@@ -11,8 +11,9 @@ class RateController extends Controller
 {
     public function index(Request $request)
     {
-        $user_id = Auth::user()->id;
-        $allrates = Rate::where('user_id', $user_id)->get();
+        $query = $request->input('status');
+        $allrates = Rate::with('users')->with('products')->where('status', '=', $query)->paginate($request->input('limit', 10));
+        // $allrates = Rate::with('users')->with('products')->paginate($request->input('limit', 10));
         return $allrates;
     }
 
@@ -46,5 +47,23 @@ class RateController extends Controller
     {
         $allrates = Rate::with('users')->where('product_id', $request->id)->limit('8')->get();
         return $allrates;
+    }
+
+    public function rateshow(Request $request)
+    {
+        $allrates = Rate::with('users')->with('products')->where('id', $request->id)->limit('8')->get();
+        return $allrates;
+    }
+
+    public function update(Request $request, $id)
+    {
+        $rate = Rate::findOrFail($id);
+        $request->validate([
+            'status' => 'required'
+        ]);
+        $rate->update([
+            'status' => $request->status,
+        ]);
+        $rate->save();
     }
 }

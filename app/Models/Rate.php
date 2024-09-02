@@ -13,11 +13,17 @@ class Rate extends Model
         'user_id',
         'product_id',
         'product_rate',
-        'description'
+        'description',
+        'status'
     ];
 
     public function users()
     {
         return $this->hasMany(User::class,  'id', 'user_id');
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class,  'id', 'product_id');
     }
 }
