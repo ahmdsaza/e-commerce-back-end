@@ -42,6 +42,7 @@ class RateController extends Controller
 
         $product = Product::findOrFail($request->product_id);
         $product->rating = $calcualterates;
+        $product->ratings_number = $ratecount;
         $product->save();
     }
 

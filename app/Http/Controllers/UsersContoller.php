@@ -32,20 +32,21 @@ class UsersContoller extends Controller
 
     public function addUser(Request $request)
     {
+        $user = new User();
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
             'role' => 'required'
         ]);
-        $user =  DB::table('users')->insert([
+        $usercreate =  $user->create([
             'name' => $request->name,
             'email' => $request->email,
             'role' => $request->role,
             'password' => Hash::make($request->password),
         ]);
         return response()->json([
-            'user' => $user,
+            'user' => $usercreate,
         ], 200);
     }
 
