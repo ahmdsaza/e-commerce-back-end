@@ -29,8 +29,7 @@ class OrderController extends Controller
         $orders = Order::with('OrderItems')->orderBy('id', 'DESC')->paginate($request->input('limit', 10));
         $query = $request->input('status');
         $orderssort = Order::with('OrderItems')->where('status', '=', $query)->orderBy('id', 'desc')->paginate($request->input('limit', 10));
-        $finalResult = $orderssort;
-        return $query ? $finalResult : $orders;
+        return $query ? $orderssort : $orders;
     }
     public function showorderscount()
     {
