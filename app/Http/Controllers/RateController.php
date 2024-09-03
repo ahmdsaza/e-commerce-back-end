@@ -11,10 +11,10 @@ class RateController extends Controller
 {
     public function index(Request $request)
     {
+        $allrates = Rate::with('users')->with('products')->orderBy('id', 'DESC')->paginate($request->input('limit', 10));
         $query = $request->input('status');
         $rates = Rate::with('users')->with('products')->orderBy('id', 'DESC')->where('status', '=', $query)->paginate($request->input('limit', 10));
-        $allrates = Rate::with('users')->with('products')->orderBy('id', 'DESC')->paginate($request->input('limit', 10));
-        return $query ? $allrates : $rates;
+        return $query ? $rates : $allrates;
     }
 
     public function store(Request $request)
