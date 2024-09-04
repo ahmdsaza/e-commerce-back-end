@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\Size;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -80,12 +81,37 @@ class ProductController extends Controller
         return $productCreated;
     }
 
+    public function addSizes(Request $request)
+    {
+        $sizename = $request->name;
+        $sizeproduct = $request->product_id;
+        $sizequantity = $request->quantity;
+
+        $size = new Size();
+        $request->validate([
+            'name' => 'required',
+            'product_id' => 'required',
+            'quantity' => 'required',
+        ]);
+        $sizecreated = $size->create([
+            'name' => $sizename,
+            'product_id' => $sizeproduct,
+            'quantity' => $sizequantity,
+        ]);
+        return $sizecreated;
+    }
+
     /**
      * Display the specified resource.
      */
     public function show($id)
     {
         return Product::where('id', $id)->with('Images')->with('Rate')->with('Sizes')->where('status', '=', 'published')->get();
+    }
+
+    public function showSize($id)
+    {
+        return Size::where('product_id', $id)->get();
     }
 
     /**
@@ -161,5 +187,10 @@ class ProductController extends Controller
             }
         }
         DB::table('products')->where('id', '=', $id)->delete();
+    }
+
+    public function destroysize($id)
+    {
+        return  Size::findOrFail($id)->delete();
     }
 }

@@ -101,6 +101,9 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware('checkProductManager')->controller(ProductController::class)->group(function () {
         Route::post('/product/edit/{id}', 'update');
         Route::post('/product/add', 'store');
+        Route::post('/sizes/add', 'addSizes');
+        Route::get('/sizes/{id}', 'showSize');
+        Route::delete('/size-delete/{id}', 'destroysize');
         Route::delete('/product/{id}', 'destroy');
     });
     Route::middleware('checkProductManager')->controller(ProductImageController::class)->group(function () {
