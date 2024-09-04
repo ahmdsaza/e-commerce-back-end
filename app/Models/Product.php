@@ -20,6 +20,11 @@ class Product extends Model
         return $this->hasMany(ProductImage::class);
     }
 
+    public function Sizes()
+    {
+        return $this->hasMany(Size::class);
+    }
+
     public function Rate()
     {
         return $this->hasMany(Rate::class, 'product_id', 'id');

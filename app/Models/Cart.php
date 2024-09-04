@@ -13,7 +13,8 @@ class Cart extends Model
         'user_id',
         'product_id',
         'product_qty',
-        'product_image'
+        'product_image',
+        'product_size'
     ];
 
     protected $with = ['product', 'Images'];
@@ -25,5 +26,10 @@ class Cart extends Model
     public function Images()
     {
         return $this->hasMany(ProductImage::class, 'product_id', 'product_id');
+    }
+
+    public function Sizes()
+    {
+        return $this->hasMany(Size::class,  'id', 'product_size');
     }
 }

@@ -85,7 +85,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return Product::where('id', $id)->with('Images')->with('Rate')->where('status', '=', 'published')->get();
+        return Product::where('id', $id)->with('Images')->with('Rate')->with('Sizes')->where('status', '=', 'published')->get();
     }
 
     /**

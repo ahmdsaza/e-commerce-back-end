@@ -50,6 +50,7 @@ class CheckoutController extends Controller
                     'product_image' => $item->product_image,
                     'qty' => $item->product_qty,
                     'price' => $item->product->discount,
+                    'size' => $item->sizes[0]->name
                 ];
 
                 $item->product->update([
