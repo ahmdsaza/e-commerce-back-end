@@ -16,8 +16,8 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $allProducts = Product::with('Images')->with('Rate')->get();
-        $products = Product::with('Images')->with('Rate')->where('status', '=', 'published')->paginate($request->input('limit', 10));
+        $allProducts = Product::with('Images')->orderBy('id', 'DESC')->with('Rate')->get();
+        $products = Product::with('Images')->with('Rate')->where('status', '=', 'published')->orderBy('id', 'DESC')->paginate($request->input('limit', 10));
         $finalResult = $request->input('limit') ? $products : $allProducts;
         return $finalResult;
     }
@@ -32,7 +32,7 @@ class ProductController extends Controller
 
     public function getLatest(Request $request)
     {
-        $products = Product::with('Images')->with('Rate')->where('status', '=', 'published')->latest()->take(8)->get();
+        $products = Product::with('Images')->with('Rate')->orderBy('id', 'DESC')->where('status', '=', 'published')->latest()->take(8)->get();
         return $products;
     }
 
