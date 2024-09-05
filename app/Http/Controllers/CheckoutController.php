@@ -53,8 +53,8 @@ class CheckoutController extends Controller
                     'size' => $item->sizes[0]->name
                 ];
 
-                $item->product->update([
-                    'qty' => $item->product->qty - $item->product_qty
+                $item->sizes[0]->update([
+                    'quantity' => $item->sizes[0]->quantity - $item->product_qty
                 ]);
             }
 
