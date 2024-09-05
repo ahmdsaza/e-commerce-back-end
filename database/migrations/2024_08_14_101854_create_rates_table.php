@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('product_id');
             $table->integer('product_rate');
             $table->string('status');
-            $table->string('description')->default(' ');
+            $table->string('description')->nullable()->default(' ');
             $table->timestamps();
         });
     }
