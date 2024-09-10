@@ -67,4 +67,10 @@ class CheckoutController extends Controller
             ]);
         }
     }
+    public function getLastOrder()
+    {
+        $user_id = Auth::user()->id;
+        $orders = Order::with('OrderItems')->where('user_id', $user_id)->limit('1')->latest('id')->get();
+        return $orders;
+    }
 }

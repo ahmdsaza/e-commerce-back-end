@@ -71,6 +71,7 @@ Route::middleware('auth:api')->group(function () {
 
     // Check Out
     Route::post('/place-order', [CheckoutController::class, 'placeorder']);
+    Route::get('/get-last-order', [CheckoutController::class, 'getLastOrder']);
 
     // Orders
     Route::get('/orders', [OrderController::class, 'index']);

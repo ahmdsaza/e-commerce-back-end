@@ -21,7 +21,7 @@ class OrderController extends Controller
     }
     public function show($id)
     {
-        return  Order::where('id', $id)->with('OrderItems')->get();
+        return Order::where('id', $id)->with('OrderItems')->get();
     }
     public function showorders(Request $request)
     {
