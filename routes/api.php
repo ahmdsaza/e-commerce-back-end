@@ -68,6 +68,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/carts', [CartController::class, 'index']);
     Route::delete('/carts/{id}', [CartController::class, 'destroy']);
     Route::put('/cart-updateqty/{qty_id}/{scope}', [CartController::class, 'updatequantity']);
+    Route::get('/cart-length', [CartController::class, 'cartlength']);
 
     // Check Out
     Route::post('/place-order', [CheckoutController::class, 'placeorder']);

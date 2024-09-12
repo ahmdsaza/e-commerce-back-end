@@ -36,8 +36,7 @@ class CheckoutController extends Controller
             $order->city = $request->city;
             $order->zipcode = $request->zipcode;
             $order->payment_mode = $request->payment_mode;
-
-            $order->tracking_no = rand(1111, 9999);
+            $order->tracking_no = rand(1111111111, 9999999999);
             $order->save();
 
             $cart = Cart::where('user_id', $user_id)->get();
