@@ -31,7 +31,6 @@ class CartController extends Controller
             // call database
             $product_qty_check = Size::where('id', $product_size)->where('product_id', $product_id)->first();
             $upadteqty = Cart::where('user_id', $user_id)->where('product_id', $product_id)->where('product_size', $product_size)->first();
-            // $product_image = $request->product_image;
 
             $call_product_qty_check = $product_qty_check->quantity;
 
@@ -49,8 +48,7 @@ class CartController extends Controller
 
                     $upadteqty->save();
                 } else {
-                    // return response()->json(['status' => 401, 'meassge' => 'No Quantity enough']);
-                    return response()->json(['error' => 'No Quantity enough'], 420);
+                    return response()->json(['error' => 'No Quantity enough there is only: ' . $call_product_qty_check . ' pices'], 420);
                 }
             } else {
                 $cartitem = new Cart;

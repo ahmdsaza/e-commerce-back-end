@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\OrderItems;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,6 +24,7 @@ class CheckoutController extends Controller
                 'city' => 'required|max:191',
                 'zipcode' => 'required|max:191',
                 'payment_mode' => 'required|max:191',
+                'totalprice' => 'required|max:191',
             ]);
 
             $user_id = Auth::user()->id;
@@ -31,7 +34,7 @@ class CheckoutController extends Controller
             $order->firstname = $request->firstname;
             $order->lastname = $request->lastname;
             $order->phone = $request->phone;
-            $order->email = $request->email;
+            $order->email = Auth::user()->email;
             $order->address = $request->address;
             $order->city = $request->city;
             $order->zipcode = $request->zipcode;
@@ -58,6 +61,21 @@ class CheckoutController extends Controller
             }
 
             $order->orderitems()->createMany($orderitems);
+
+            $totalprice = OrderItems::where('order_id', $order->id)->sum('price');
+
+            $payments = new Payment;
+            $payments->order_id = $order->id;
+            $payments->total_price = $request->totalprice;
+            $payments->payment_mode = $request->payment_mode;
+            $payments->status = 0;
+
+
+            $payments->save();
+
+            $order->payment_id = $payments->id;
+            $order->save();
+
             Cart::destroy($cart);
         } else {
             return response()->json()([
