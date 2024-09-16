@@ -62,15 +62,11 @@ class CheckoutController extends Controller
 
             $order->orderitems()->createMany($orderitems);
 
-            $totalprice = OrderItems::where('order_id', $order->id)->sum('price');
-
             $payments = new Payment;
             $payments->order_id = $order->id;
             $payments->total_price = $request->totalprice;
             $payments->payment_mode = $request->payment_mode;
             $payments->status = 0;
-
-
             $payments->save();
 
             $order->payment_id = $payments->id;
