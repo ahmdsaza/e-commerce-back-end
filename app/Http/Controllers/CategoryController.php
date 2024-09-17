@@ -14,8 +14,8 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $allCategories = Category::all();
-        $categories = Category::paginate($request->input('limit', 10));
+        $allCategories = Category::orderBy('id', 'DESC')->get();
+        $categories = Category::orderBy('id', 'DESC')->paginate($request->input('limit', 10));
         $finalResult = $request->input('limit') ? $categories : $allCategories;
         return $finalResult;
     }
@@ -55,9 +55,9 @@ class CategoryController extends Controller
     public function show(Request $request, $id)
     {
 
-        $allproducts = Product::where('category', $id)->with('Images')->where('status', '=', 'published')->get();
+        $allproducts = Product::where('category', $id)->with('Images')->orderBy('id', 'DESC')->where('status', '=', 'published')->get();
         // $products = Product::where('category', $id)->with('Images')->where('status', '=', 'published')->paginate($request->input('limit', 10));
-        $productsSort = Product::where('category', $id)->with('Images')->where('status', '=', 'published')->orderBy($request->input('sort'), $request->input('type'))->paginate($request->input('limit', 10));
+        $productsSort = Product::where('category', $id)->with('Images')->where('status', '=', 'published')->orderBy('id', 'DESC')->orderBy($request->input('sort'), $request->input('type'))->paginate($request->input('limit', 10));
         $finalResult = $request->input('sort') ? $productsSort : $allproducts;
         return $finalResult;
     }
