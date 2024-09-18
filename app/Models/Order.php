@@ -17,6 +17,7 @@ class Order extends Model
         'address',
         'city',
         'zipcode',
+        'address_id',
         'payment_id',
         'payment_mode',
         'tracking_no',
@@ -32,5 +33,10 @@ class Order extends Model
     public function users()
     {
         return $this->hasMany(User::class,  'id', 'user_id');
+    }
+
+    public function Payment()
+    {
+        return $this->hasMany(Payment::class, 'order_id', 'id');
     }
 }

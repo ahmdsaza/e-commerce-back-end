@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
@@ -10,7 +11,7 @@ use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\RateController;
 use App\Http\Controllers\socialAuthController;
 use App\Http\Controllers\UsersContoller;
-
+use App\Models\Address;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -73,6 +74,12 @@ Route::middleware('auth:api')->group(function () {
     // Check Out
     Route::post('/place-order', [CheckoutController::class, 'placeorder']);
     Route::get('/get-last-order', [CheckoutController::class, 'getLastOrder']);
+
+    // Address
+    Route::get('/address', [AddressController::class, 'index']);
+    Route::post('/add-address', [AddressController::class, 'addAddress']);
+    Route::delete('/address/delete/{id}', [Address::class, 'destroy']);
+
 
     // Orders
     Route::get('/orders', [OrderController::class, 'index']);

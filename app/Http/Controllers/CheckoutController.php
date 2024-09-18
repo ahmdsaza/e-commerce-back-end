@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Order;
-use App\Models\OrderItems;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,28 +16,26 @@ class CheckoutController extends Controller
     {
         if (auth()->user()) {
             $request->validate([
-                'firstname' => 'required|max:191',
-                'lastname' => 'required|max:191',
-                'phone' => 'required|max:191',
-                'email' => 'required|max:191',
-                'address' => 'required|max:191',
-                'city' => 'required|max:191',
-                'zipcode' => 'required|max:191',
+                'address_id' => 'required|max:191',
                 'payment_mode' => 'required|max:191',
+                'productsprice' => 'required|max:191',
+                'vat' => 'required|max:191',
                 'totalprice' => 'required|max:191',
             ]);
 
             $user_id = Auth::user()->id;
 
+            $address = Address::where('id', $request->address_id)->first();
+
             $order = new Order;
             $order->user_id = $user_id;
-            $order->firstname = $request->firstname;
-            $order->lastname = $request->lastname;
-            $order->phone = $request->phone;
+            $order->firstname = $address->firstname;
+            $order->lastname = $address->lastname;
+            $order->phone = "+966" . $address->phone;
             $order->email = Auth::user()->email;
-            $order->address = $request->address;
-            $order->city = $request->city;
-            $order->zipcode = $request->zipcode;
+            $order->address = $address->address;
+            $order->city = $address->city;
+            $order->zipcode = $address->zipcode;
             $order->payment_mode = $request->payment_mode;
             $order->tracking_no = rand(1111111111, 9999999999);
             $order->save();
@@ -64,8 +62,10 @@ class CheckoutController extends Controller
 
             $payments = new Payment;
             $payments->order_id = $order->id;
-            $payments->total_price = $request->totalprice;
             $payments->payment_mode = $request->payment_mode;
+            $payments->productsprice = $request->productsprice;
+            $payments->vat = $request->vat;
+            $payments->total_price = $request->totalprice;
             $payments->status = 0;
             $payments->save();
 
