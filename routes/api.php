@@ -85,9 +85,20 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/order/{id}', [OrderController::class, 'show']);
     Route::get('/get-order', [OrderController::class, 'showorders']);
-    Route::get('/get-order-count', [OrderController::class, 'showorderscount']);
     Route::post('/orders/edit/{id}', [OrderController::class, 'update']);
     Route::delete('/order/{id}', [OrderController::class, 'destroy']);
+
+    // Showing Orders Status
+    Route::get('/get-order-count', [OrderController::class, 'showorderscount']);
+    Route::get('/get-pending-order-count', [OrderController::class, 'showpendingorderscount']);
+    Route::get('/get-completed-order-count', [OrderController::class, 'showcompletedorderscount']);
+    Route::get('/get-cancelled-order-count', [OrderController::class, 'showcancelledorderscount']);
+
+    // Showing Orders Amount
+    Route::get('/get-orders-amount', [OrderController::class, 'showorderssum']);
+    Route::get('/get-pending-orders-amount', [OrderController::class, 'showpendingorderssum']);
+    Route::get('/get-completed-orders-amount', [OrderController::class, 'showcompletedorderssum']);
+    Route::get('/get-cancelled-orders-amount', [OrderController::class, 'showcancelledorderssum']);
 
     // Users
     Route::get('/user', [UsersContoller::class, 'authUser']);

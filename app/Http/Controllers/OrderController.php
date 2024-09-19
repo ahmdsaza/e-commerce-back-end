@@ -31,11 +31,7 @@ class OrderController extends Controller
         $orderssort = Order::with('OrderItems')->with('users')->with('Payment')->where('status', '=', $query)->orderBy('id', 'desc')->paginate($request->input('limit', 10));
         return $query ? $orderssort : $orders;
     }
-    public function showorderscount()
-    {
-        $orders = Order::count();
-        return $orders;
-    }
+
     public function destroy($id)
     {
         return  Order::findOrFail($id)->delete();
@@ -50,5 +46,51 @@ class OrderController extends Controller
             'status' => $request->status,
         ]);
         $order->save();
+    }
+
+    // Showing Orders
+
+    public function showorderscount()
+    {
+        $orders = Order::count();
+        return $orders;
+    }
+    public function showpendingorderscount()
+    {
+        $orders = Order::where('status', '=', '0')->count();
+        return $orders;
+    }
+    public function showcompletedorderscount()
+    {
+        $orders = Order::where('status', '=', '3')->count();
+        return $orders;
+    }
+    public function showcancelledorderscount()
+    {
+        $orders = Order::where('status', '=', '5')->count();
+        return $orders;
+    }
+
+    // Showing Orders Amount
+
+    public function showorderssum()
+    {
+        $orders = Order::where('status', '!=', '5')->sum('totalprice');
+        return $orders;
+    }
+    public function showpendingorderssum()
+    {
+        $orders = Order::where('status', '=', '0')->sum('totalprice');
+        return $orders;
+    }
+    public function showcompletedorderssum()
+    {
+        $orders = Order::where('status', '=', '3')->sum('totalprice');
+        return $orders;
+    }
+    public function showcancelledorderssum()
+    {
+        $orders = Order::where('status', '=', '5')->sum('totalprice');
+        return $orders;
     }
 }

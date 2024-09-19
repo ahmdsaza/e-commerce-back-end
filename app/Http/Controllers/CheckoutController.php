@@ -33,6 +33,7 @@ class CheckoutController extends Controller
             $order->lastname = $address->lastname;
             $order->phone = "+966" . $address->phone;
             $order->email = Auth::user()->email;
+            $order->totalprice = $request->totalprice;
             $order->address = $address->address;
             $order->city = $address->city;
             $order->zipcode = $address->zipcode;

@@ -19,6 +19,7 @@ class Order extends Model
         'zipcode',
         'address_id',
         'payment_id',
+        'totalprice',
         'payment_mode',
         'tracking_no',
         'status',
