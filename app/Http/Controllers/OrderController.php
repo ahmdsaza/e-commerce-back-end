@@ -52,45 +52,29 @@ class OrderController extends Controller
 
     public function showorderscount()
     {
-        $orders = Order::count();
-        return $orders;
-    }
-    public function showpendingorderscount()
-    {
-        $orders = Order::where('status', '=', '0')->count();
-        return $orders;
-    }
-    public function showcompletedorderscount()
-    {
-        $orders = Order::where('status', '=', '3')->count();
-        return $orders;
-    }
-    public function showcancelledorderscount()
-    {
-        $orders = Order::where('status', '=', '5')->count();
-        return $orders;
-    }
+        // Count
+        $ordersCount = Order::count();
+        $ordersPending = Order::where('status', '=', '0')->count();
+        $ordersCompleted = Order::where('status', '=', '3')->count();
+        $ordersCancelled = Order::where('status', '=', '5')->count();
 
-    // Showing Orders Amount
+        // Total Amount
+        $ordersAmount = Order::where('status', '!=', '5')->sum('totalprice');
+        $ordersPendingAmount = Order::where('status', '=', '0')->sum('totalprice');
+        $ordersCompletedAmount = Order::where('status', '=', '3')->sum('totalprice');
+        $ordersCancelledAmount = Order::where('status', '=', '5')->sum('totalprice');
 
-    public function showorderssum()
-    {
-        $orders = Order::where('status', '!=', '5')->sum('totalprice');
-        return $orders;
-    }
-    public function showpendingorderssum()
-    {
-        $orders = Order::where('status', '=', '0')->sum('totalprice');
-        return $orders;
-    }
-    public function showcompletedorderssum()
-    {
-        $orders = Order::where('status', '=', '3')->sum('totalprice');
-        return $orders;
-    }
-    public function showcancelledorderssum()
-    {
-        $orders = Order::where('status', '=', '5')->sum('totalprice');
-        return $orders;
+        $orderscall = [
+            'orderscount' => $ordersCount,
+            'orderspending' => $ordersPending,
+            'ordercompleted' => $ordersCompleted,
+            'orderscancelled' => $ordersCancelled,
+            'ordersamount' => $ordersAmount,
+            'orderspendingamount' => $ordersPendingAmount,
+            'ordercompletedamount' => $ordersCompletedAmount,
+            'orderscancelledamount' => $ordersCancelledAmount,
+        ];
+
+        return $orderscall;
     }
 }
