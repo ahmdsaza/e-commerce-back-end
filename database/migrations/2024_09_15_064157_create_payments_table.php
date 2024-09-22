@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('total_price');
             $table->string('productsprice');
             $table->string('vat');
+            $table->string('fees');
             $table->string('status');
 
             $table->timestamps();

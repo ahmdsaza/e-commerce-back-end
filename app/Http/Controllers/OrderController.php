@@ -69,10 +69,10 @@ class OrderController extends Controller
             'orderspending' => $ordersPending,
             'ordercompleted' => $ordersCompleted,
             'orderscancelled' => $ordersCancelled,
-            'ordersamount' => $ordersAmount,
-            'orderspendingamount' => $ordersPendingAmount,
-            'ordercompletedamount' => $ordersCompletedAmount,
-            'orderscancelledamount' => $ordersCancelledAmount,
+            'ordersamount' => number_format($ordersAmount, 2),
+            'orderspendingamount' => number_format($ordersPendingAmount, 2),
+            'ordercompletedamount' => number_format($ordersCompletedAmount, 2),
+            'orderscancelledamount' => number_format($ordersCancelledAmount, 2),
         ];
 
         return $orderscall;

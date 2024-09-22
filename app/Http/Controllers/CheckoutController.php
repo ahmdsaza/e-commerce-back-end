@@ -20,6 +20,7 @@ class CheckoutController extends Controller
                 'payment_mode' => 'required|max:191',
                 'productsprice' => 'required|max:191',
                 'vat' => 'required|max:191',
+                'fees' => 'required|max:191',
                 'totalprice' => 'required|max:191',
             ]);
 
@@ -66,6 +67,7 @@ class CheckoutController extends Controller
             $payments->payment_mode = $request->payment_mode;
             $payments->productsprice = $request->productsprice;
             $payments->vat = $request->vat;
+            $payments->fees = $request->fees;
             $payments->total_price = $request->totalprice;
             $payments->status = 0;
             $payments->save();
@@ -84,7 +86,7 @@ class CheckoutController extends Controller
     public function getLastOrder()
     {
         $user_id = Auth::user()->id;
-        $orders = Order::with('OrderItems')->where('user_id', $user_id)->limit('1')->latest('id')->get();
+        $orders = Order::with('OrderItems')->with('Payment')->where('user_id', $user_id)->limit('1')->latest('id')->get();
         return $orders;
     }
 }
