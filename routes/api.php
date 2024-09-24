@@ -103,6 +103,7 @@ Route::middleware('auth:api')->group(function () {
     });
     // Product Manger
     Route::middleware('checkProductManager')->controller(CategoryController::class)->group(function () {
+        Route::get('/category-show/{id}', 'showcategory');
         Route::post('/category/search', 'search');
         Route::post('/category/edit/{id}', 'edit');
         Route::post('/category/add', 'store');

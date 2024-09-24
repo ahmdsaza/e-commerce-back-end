@@ -62,6 +62,13 @@ class CategoryController extends Controller
         return $finalResult;
     }
 
+    public function showcategory(Request $request, $id)
+    {
+
+        $finalResult = Category::findOrFail($id);
+        return $finalResult;
+    }
+
     public function productsCategory(Category $category, $id)
     {
         return Category::findOrFail($id);
