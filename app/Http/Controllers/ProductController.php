@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\Rate;
 use App\Models\Size;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -138,7 +139,6 @@ class ProductController extends Controller
             'price' => 'required | numeric',
             'discount' => 'required | numeric',
             'About' => 'required',
-            // 'qty' => 'required'
         ]);
         $product->update([
             'category' => $request->category,
@@ -147,7 +147,6 @@ class ProductController extends Controller
             'price' => $request->price,
             'About' => $request->About,
             'discount' => $request->discount,
-            // 'qty' => $request->qty
         ]);
         $product->status = 'published';
         $product->save();
@@ -190,6 +189,7 @@ class ProductController extends Controller
             }
         }
         DB::table('products')->where('id', '=', $id)->delete();
+        DB::table('rates')->where('product_id', '=', $id)->delete();
     }
 
     public function destroysize($id)

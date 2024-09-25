@@ -55,7 +55,7 @@ class CheckoutController extends Controller
                     'product_title' => $item->product->title,
                     'product_image' => $item->product_image,
                     'qty' => $item->product_qty,
-                    'price' => $item->product->discount,
+                    'price' => $item->product->discount > 0 ? $item->product->discount : $item->product->price,
                     'size' => $item->sizes[0]->name
                 ];
 
@@ -72,7 +72,7 @@ class CheckoutController extends Controller
             $payments->productsprice = $request->productsprice;
             $payments->vat = $request->vat;
             $payments->fees = $request->fees;
-            $payments->total_price = $request->totalprice;
+            $payments->total_price = $request->totalprice + ($request->fees * 1);
             $payments->status = 0;
             $payments->save();
 

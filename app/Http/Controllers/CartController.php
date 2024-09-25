@@ -31,36 +31,41 @@ class CartController extends Controller
 
             // call database
             $product_qty_check = Size::where('id', $product_size)->where('product_id', $product_id)->first();
-            $upadteqty = Cart::where('user_id', $user_id)->where('product_id', $product_id)->where('product_size', $product_size)->first();
+            $upadte_qty = Cart::where('user_id', $user_id)->where('product_id', $product_id)->where('product_size', $product_size)->first();
 
             $call_product_qty_check = $product_qty_check->quantity;
 
-            if ($upadteqty) {
-                $upadteqtycount = $upadteqty->product_qty + $product_qty;
+            if ($call_product_qty_check >= $product_qty) {
 
-                if ($call_product_qty_check >= $upadteqtycount) {
+                if ($upadte_qty) {
+                    $upadte_qty_count = $upadte_qty->product_qty + $product_qty;
 
-                    $request->validate([
-                        'product_qty' => 'required',
-                    ]);
-                    $upadteqty->update([
-                        'product_qty' =>  $request->product_qty + $upadteqty->product_qty,
-                    ]);
+                    if ($call_product_qty_check >= $upadte_qty_count) {
 
-                    $upadteqty->save();
+                        $request->validate([
+                            'product_qty' => 'required',
+                        ]);
+                        $upadte_qty->update([
+                            'product_qty' =>  $request->product_qty + $upadte_qty->product_qty,
+                        ]);
+
+                        $upadte_qty->save();
+                    } else {
+                        return response()->json(['error' => 'No Quantity enough there is only: ' . $call_product_qty_check . ' pices'], 420);
+                    }
                 } else {
-                    return response()->json(['error' => 'No Quantity enough there is only: ' . $call_product_qty_check . ' pices'], 420);
+                    $cartitem = new Cart;
+                    $cartitem->user_id = $user_id;
+                    $cartitem->product_id = $product_id;
+                    $cartitem->product_slug = $product_slug;
+                    $cartitem->product_qty = $product_qty;
+                    $cartitem->product_image = $product_id;
+                    $cartitem->product_size = $product_size;
+
+                    $cartitem->save();
                 }
             } else {
-                $cartitem = new Cart;
-                $cartitem->user_id = $user_id;
-                $cartitem->product_id = $product_id;
-                $cartitem->product_slug = $product_slug;
-                $cartitem->product_qty = $product_qty;
-                $cartitem->product_image = $product_id;
-                $cartitem->product_size = $product_size;
-
-                $cartitem->save();
+                return response()->json(['error' => 'No Quantity enough there is only: ' . $call_product_qty_check . ' pices'], 420);
             }
         } else {
             return response()->json(['status' => 401, 'meassge' => 'Login to Add to Cart']);

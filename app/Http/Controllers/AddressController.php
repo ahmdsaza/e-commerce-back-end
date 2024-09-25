@@ -34,6 +34,8 @@ class AddressController extends Controller
         $address->city = $request->city;
         $address->zipcode = $request->zipcode;
         $address->save();
+
+        return $address;
     }
 
     public function destroy($id)
