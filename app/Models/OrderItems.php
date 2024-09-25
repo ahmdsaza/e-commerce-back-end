@@ -12,10 +12,15 @@ class OrderItems extends Model
     protected $fillable = [
         'order_id',
         'product_id',
+        'product_slug',
         'product_title',
         'product_image',
         'qty',
         'price',
         'size',
     ];
+    public function Products()
+    {
+        return $this->hasMany(Product::class, 'product_id', 'id');
+    }
 }

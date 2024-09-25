@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -62,7 +63,6 @@ class ProductController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
-            // 'qty' => 'required',
             'price' => 'required | numeric',
             'discount' => 'required | numeric',
             'About' => 'required'
@@ -72,11 +72,10 @@ class ProductController extends Controller
             'category' => $request->category,
             'title' => $request->title,
             'description' => $request->description,
-            // 'qty' => $request->qty,
             'price' => $request->price,
             'About' => $request->About,
-            'discount' => $request->discount
-
+            'discount' => $request->discount,
+            'slug' => Str::random(14)
         ]);
         return $productCreated;
     }
@@ -105,6 +104,10 @@ class ProductController extends Controller
      * Display the specified resource.
      */
     public function show($id)
+    {
+        return Product::where('slug', $id)->with('Images')->with('Rate')->with('Sizes')->where('status', '=', 'published')->get();
+    }
+    public function showCategory($id)
     {
         return Product::where('id', $id)->with('Images')->with('Rate')->with('Sizes')->where('status', '=', 'published')->get();
     }

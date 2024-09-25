@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('ratings_number')->default(0);
             $table->string('price');
             $table->string('discount')->default(0);
+            $table->string('slug');
             $table->text('About');
             $table->string('status')->default('draft');
             $table->foreign('category')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');

@@ -8,6 +8,8 @@ use App\Models\Order;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+
 
 class CheckoutController extends Controller
 {
@@ -39,6 +41,7 @@ class CheckoutController extends Controller
             $order->city = $address->city;
             $order->zipcode = $address->zipcode;
             $order->payment_mode = $request->payment_mode;
+            $order->slug = Str::random(14);
             $order->tracking_no = rand(1111111111, 9999999999);
             $order->save();
 
@@ -48,6 +51,7 @@ class CheckoutController extends Controller
             foreach ($cart as $item) {
                 $orderitems[] = [
                     'product_id' => $item->product_id,
+                    'product_slug' => $item->product_slug,
                     'product_title' => $item->product->title,
                     'product_image' => $item->product_image,
                     'qty' => $item->product_qty,

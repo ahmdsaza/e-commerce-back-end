@@ -50,6 +50,7 @@ Route::get('/latest', [ProductController::class, 'getLatest']);
 Route::get('/top-rated', [ProductController::class, 'getTopRated']);
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/product/{id}', [ProductController::class, 'show']);
+Route::get('/product-category/{id}', [ProductController::class, 'showCategory']);
 Route::post('/product/search', [ProductController::class, 'search']);
 
 // Rates

@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('payment_id')->nullable();
             $table->string('totalprice');
             $table->string('payment_mode');
+            $table->string('slug');
             $table->string('tracking_no');
             $table->tinyInteger('status')->default('0');
             $table->text('remark')->nullable();

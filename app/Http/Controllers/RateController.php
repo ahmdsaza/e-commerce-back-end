@@ -23,6 +23,7 @@ class RateController extends Controller
         $request->validate([
             'user_id' => 'required',
             'product_id' => 'required',
+            'product_slug' => 'required',
             'product_rate' => 'required',
             'description' => 'nullable',
             'status' => 'required'
@@ -30,17 +31,18 @@ class RateController extends Controller
         $ratecreate = $rate->create([
             'user_id' => $request->user_id,
             'product_id' => $request->product_id,
+            'product_slug' => $request->product_slug,
             'product_rate' => $request->product_rate,
             'description' => $request->description,
             'status' => $request->status
         ]);
         $ratecreate->save();
 
-        $ratecount = Rate::where('product_id', $request->product_id)->count();
-        $ratestarcount = Rate::where('product_id', $request->product_id)->sum('product_rate');
+        $ratecount = Rate::where('product_slug', $request->product_slug)->count();
+        $ratestarcount = Rate::where('product_slug', $request->product_slug)->sum('product_rate');
         $calcualterates = $ratestarcount / $ratecount;
 
-        $product = Product::findOrFail($request->product_id);
+        $product = Product::where('slug', $request->product_slug)->first();
         $product->rating = $calcualterates;
         $product->ratings_number = $ratecount;
         $product->save();
@@ -48,7 +50,7 @@ class RateController extends Controller
 
     public function show(Request $request)
     {
-        $allrates = Rate::with('users')->where('status', '=', '1')->where('product_id', $request->id)->limit('8')->get();
+        $allrates = Rate::with('users')->where('status', '=', '1')->where('product_slug', $request->id)->limit('8')->get();
         return $allrates;
     }
 

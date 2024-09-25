@@ -25,6 +25,7 @@ class CartController extends Controller
             // call request
             $user_id = $request->user_id;
             $product_id = $request->product_id;
+            $product_slug = $request->product_slug;
             $product_size = $request->product_size;
             $product_qty = $request->product_qty;
 
@@ -54,6 +55,7 @@ class CartController extends Controller
                 $cartitem = new Cart;
                 $cartitem->user_id = $user_id;
                 $cartitem->product_id = $product_id;
+                $cartitem->product_slug = $product_slug;
                 $cartitem->product_qty = $product_qty;
                 $cartitem->product_image = $product_id;
                 $cartitem->product_size = $product_size;

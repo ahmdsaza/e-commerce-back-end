@@ -21,7 +21,7 @@ class OrderController extends Controller
     }
     public function show($id)
     {
-        return Order::where('id', $id)->with('OrderItems')->with('Payment')->get();
+        return Order::where('slug', $id)->with('OrderItems')->with('Payment')->get();
     }
     public function showorders(Request $request)
     {
@@ -38,7 +38,7 @@ class OrderController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::where('slug', $id)->first();
         $request->validate([
             'status' => 'required'
         ]);

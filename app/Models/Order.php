@@ -22,6 +22,7 @@ class Order extends Model
         'totalprice',
         'payment_mode',
         'tracking_no',
+        'slug',
         'status',
         'remark',
     ];
