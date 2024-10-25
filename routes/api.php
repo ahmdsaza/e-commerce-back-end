@@ -116,6 +116,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/product/add', 'store');
         Route::post('/sizes/add', 'addSizes');
         Route::get('/sizes/{id}', 'showSize');
+        Route::put('/sizes/edit/{id}', 'updateSize');
         Route::delete('/size-delete/{id}', 'destroysize');
         Route::delete('/product/{id}', 'destroy');
     });

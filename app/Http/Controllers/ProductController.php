@@ -175,6 +175,20 @@ class ProductController extends Controller
         return response()->json($results);
     }
 
+    public function updateSize(Request $request, $id)
+    {
+        $size = Size::findOrFail($id);
+        $request->validate([
+            'name' => 'required',
+            'quantity' => 'required',
+        ]);
+        $size->update([
+            'name' => $request->name,
+            'quantity' => $request->quantity,
+        ]);
+        $size->save();
+    }
+
 
     /**
      * Remove the specified resource from storage.
