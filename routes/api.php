@@ -78,8 +78,9 @@ Route::middleware('auth:api')->group(function () {
 
     // Address
     Route::get('/address', [AddressController::class, 'index']);
-    Route::post('/add-address', [AddressController::class, 'addAddress']);
-    Route::delete('/address/delete/{id}', [Address::class, 'destroy']);
+    Route::post('/address/add', [AddressController::class, 'addAddress']);
+    Route::put('/address/edit/{id}', [AddressController::class, 'update']);
+    Route::delete('/address/delete/{id}', [AddressController::class, 'destroy']);
 
 
     // Orders

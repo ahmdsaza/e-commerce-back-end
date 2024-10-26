@@ -38,6 +38,28 @@ class AddressController extends Controller
         return $address;
     }
 
+    public function update(Request $request, $id)
+    {
+        $address = Address::findOrFail($id);
+        $request->validate([
+            'firstname' => 'required|max:191',
+            'lastname' => 'required|max:191',
+            'phone' => 'required|max:191',
+            'address' => 'required|max:191',
+            'city' => 'required|max:191',
+            'zipcode' => 'required|max:191',
+        ]);
+        $address->update([
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'city' => $request->city,
+            'zipcode' => $request->zipcode,
+        ]);
+        $address->save();
+    }
+
     public function destroy($id)
     {
         return Address::findOrFail($id)->delete();
