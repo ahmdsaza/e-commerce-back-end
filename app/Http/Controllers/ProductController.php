@@ -83,18 +83,18 @@ class ProductController extends Controller
 
     public function addSizes(Request $request)
     {
-        $sizename = $request->name;
+        $sizename = $request->title;
         $sizeproduct = $request->product_id;
         $sizequantity = $request->quantity;
 
         $size = new Size();
         $request->validate([
-            'name' => 'required',
+            'title' => 'required',
             'product_id' => 'required',
             'quantity' => 'required',
         ]);
         $sizecreated = $size->create([
-            'name' => $sizename,
+            'title' => $sizename,
             'product_id' => $sizeproduct,
             'quantity' => $sizequantity,
         ]);
@@ -179,11 +179,11 @@ class ProductController extends Controller
     {
         $size = Size::findOrFail($id);
         $request->validate([
-            'name' => 'required',
+            'title' => 'required',
             'quantity' => 'required',
         ]);
         $size->update([
-            'name' => $request->name,
+            'title' => $request->title,
             'quantity' => $request->quantity,
         ]);
         $size->save();
