@@ -50,7 +50,7 @@ class RateController extends Controller
 
     public function show(Request $request)
     {
-        $allrates = Rate::with('users')->where('status', '=', '1')->where('product_slug', $request->id)->limit('8')->get();
+        $allrates = Rate::with('users')->where('status', '=', '1')->where('product_slug', $request->id)->limit('5')->get();
         return $allrates;
     }
 

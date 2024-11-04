@@ -108,6 +108,15 @@ class ProductController extends Controller
     {
         return Product::where('slug', $id)->with('Images')->with('Rate')->with('Sizes')->where('status', '=', 'published')->get();
     }
+
+    public function showRelated($id)
+    {
+        $product = Product::where('slug', $id)->first();
+        $productcategory = $product->category;
+        $getProduct = Product::where('slug', '!=', $id)->where('category', '=', $productcategory)->with('Images')->where('status', '=', 'published')->get();
+        return $getProduct;
+    }
+
     public function showCategory($id)
     {
         return Product::where('id', $id)->with('Images')->with('Rate')->with('Sizes')->where('status', '=', 'published')->get();

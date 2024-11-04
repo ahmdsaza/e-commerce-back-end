@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\OrderItems;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,11 +27,16 @@ class OrderController extends Controller
     }
     public function showorders(Request $request)
     {
-        // $allorders = Order::with('OrderItems')->get();
         $orders = Order::with('OrderItems')->with('users')->with('Payment')->orderBy('id', 'DESC')->paginate($request->input('limit', 10));
         $query = $request->input('status');
         $orderssort = Order::with('OrderItems')->with('users')->with('Payment')->where('status', '=', $query)->orderBy('id', 'desc')->paginate($request->input('limit', 10));
         return $query ? $orderssort : $orders;
+    }
+
+    public function lastorders()
+    {
+        $orders = Order::with('users')->with('Payment')->orderBy('id', 'DESC')->limit('6')->get();
+        return $orders;
     }
 
     public function destroy($id)
@@ -64,6 +71,11 @@ class OrderController extends Controller
         $ordersCompletedAmount = Order::where('status', '=', '3')->sum('totalprice');
         $ordersCancelledAmount = Order::where('status', '=', '5')->sum('totalprice');
 
+        // Products & Users
+
+        $users = User::count();
+        $product = Product::count();
+
         $orderscall = [
             'orderscount' => $ordersCount,
             'orderspending' => $ordersPending,
@@ -73,6 +85,10 @@ class OrderController extends Controller
             'orderspendingamount' => number_format($ordersPendingAmount, 2),
             'ordercompletedamount' => number_format($ordersCompletedAmount, 2),
             'orderscancelledamount' => number_format($ordersCancelledAmount, 2),
+            'UsersCount' => $users,
+            2,
+            'ProductsCount' => $product,
+            2,
         ];
 
         return $orderscall;

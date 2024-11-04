@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImageController;
@@ -50,6 +51,7 @@ Route::get('/latest', [ProductController::class, 'getLatest']);
 Route::get('/top-rated', [ProductController::class, 'getTopRated']);
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/product/{id}', [ProductController::class, 'show']);
+Route::get('/product/showRelated/{id}', [ProductController::class, 'showRelated']);
 Route::get('/product-category/{id}', [ProductController::class, 'showCategory']);
 Route::post('/product/search', [ProductController::class, 'search']);
 
@@ -82,16 +84,23 @@ Route::middleware('auth:api')->group(function () {
     Route::put('/address/edit/{id}', [AddressController::class, 'update']);
     Route::delete('/address/delete/{id}', [AddressController::class, 'destroy']);
 
-
     // Orders
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/order/{id}', [OrderController::class, 'show']);
     Route::get('/get-order', [OrderController::class, 'showorders']);
+    Route::get('/last-order', [OrderController::class, 'lastorders']);
     Route::post('/orders/edit/{id}', [OrderController::class, 'update']);
     Route::delete('/order/{id}', [OrderController::class, 'destroy']);
 
     // Showing Orders
     Route::get('/get-order-count', [OrderController::class, 'showorderscount']);
+
+    // Coupon
+    Route::get('/coupon', [CouponController::class, 'index']);
+    Route::get('/coupon/{id}', [CouponController::class, 'show']);
+    Route::get('/coupon/check/{id}', [CouponController::class, 'checkcoupon']);
+    Route::post('/coupon/add', [CouponController::class, 'store']);
+    Route::delete('/coupon/delete/{id}', [CouponController::class, 'destroy']);
 
     // Users
     Route::get('/user', [UsersContoller::class, 'authUser']);
