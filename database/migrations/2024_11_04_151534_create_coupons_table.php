@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->integer('percent');
             $table->float('lowest_price');
-            $table->date('start_date');
-            $table->date('expire_date');
+            $table->dateTime('start_date');
+            $table->dateTime('expire_date');
             $table->timestamps();
         });
     }

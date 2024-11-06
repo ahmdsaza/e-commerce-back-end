@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('city');
             $table->string('zipcode');
             $table->string('payment_id')->nullable();
+            $table->string('coupon_id');
             $table->string('totalprice');
             $table->string('payment_mode');
             $table->string('slug');

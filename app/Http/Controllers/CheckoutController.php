@@ -24,6 +24,7 @@ class CheckoutController extends Controller
                 'vat' => 'required|max:191',
                 'fees' => 'required|max:191',
                 'totalprice' => 'required|max:191',
+                'coupon_id' => 'required|max:191',
             ]);
 
             $user_id = Auth::user()->id;
@@ -41,6 +42,7 @@ class CheckoutController extends Controller
             $order->city = $address->city;
             $order->zipcode = $address->zipcode;
             $order->payment_mode = $request->payment_mode;
+            $order->coupon_id = $request->coupon_id;
             $order->slug = Str::random(14);
             $order->tracking_no = rand(1111111111, 9999999999);
             $order->save();
@@ -56,7 +58,7 @@ class CheckoutController extends Controller
                     'product_image' => $item->product_image,
                     'qty' => $item->product_qty,
                     'price' => $item->product->discount > 0 ? $item->product->discount : $item->product->price,
-                    'size' => $item->sizes[0]->name
+                    'size' => $item->sizes[0]->title
                 ];
 
                 $item->sizes[0]->update([
@@ -90,7 +92,7 @@ class CheckoutController extends Controller
     public function getLastOrder()
     {
         $user_id = Auth::user()->id;
-        $orders = Order::with('OrderItems')->with('Payment')->where('user_id', $user_id)->limit('1')->latest('id')->get();
+        $orders = Order::with('OrderItems')->with('Payment')->with('Coupon')->where('user_id', $user_id)->limit('1')->latest('id')->get();
         return $orders;
     }
 }

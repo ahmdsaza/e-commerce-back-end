@@ -23,7 +23,7 @@ class OrderController extends Controller
     }
     public function show($id)
     {
-        return Order::where('slug', $id)->with('OrderItems')->with('Payment')->get();
+        return Order::where('slug', $id)->with('OrderItems')->with('Payment')->with('Coupon')->get();
     }
     public function showorders(Request $request)
     {
