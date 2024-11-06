@@ -83,7 +83,7 @@ class ProductController extends Controller
 
     public function addSizes(Request $request)
     {
-        $sizename = $request->title;
+        $sizetitle = $request->title;
         $sizeproduct = $request->product_id;
         $sizequantity = $request->quantity;
 
@@ -94,7 +94,7 @@ class ProductController extends Controller
             'quantity' => 'required',
         ]);
         $sizecreated = $size->create([
-            'title' => $sizename,
+            'title' => $sizetitle,
             'product_id' => $sizeproduct,
             'quantity' => $sizequantity,
         ]);

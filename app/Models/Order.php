@@ -19,6 +19,7 @@ class Order extends Model
         'zipcode',
         'address_id',
         'payment_id',
+        'coupon_id',
         'totalprice',
         'payment_mode',
         'tracking_no',
@@ -40,5 +41,9 @@ class Order extends Model
     public function Payment()
     {
         return $this->hasMany(Payment::class, 'order_id', 'id');
+    }
+    public function Coupon()
+    {
+        return $this->hasMany(Coupon::class, 'id', 'coupon_id');
     }
 }
