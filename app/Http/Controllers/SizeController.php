@@ -15,18 +15,18 @@ class SizeController extends Controller
 
     public function addSizes(Request $request)
     {
-        $sizename = $request->name;
+        $sizetitle = $request->title;
         $sizeproduct = $request->product_id;
         $sizequantity = $request->quantity;
 
         $size = new Size();
         $request->validate([
-            'name' => 'required',
+            'title' => 'required',
             'product_id' => 'required',
             'quantity' => 'required',
         ]);
         $sizecreated = $size->create([
-            'name' => $sizename,
+            'title' => $sizetitle,
             'product_id' => $sizeproduct,
             'quantity' => $sizequantity,
         ]);

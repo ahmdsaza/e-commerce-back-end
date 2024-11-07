@@ -74,9 +74,7 @@ class CartController extends Controller
 
     public function cartlength()
     {
-        $user_id = Auth::user()->id;
-        $cart = Cart::where('user_id', $user_id)->count();
-        return $cart;
+        return Cart::where('user_id', Auth::user()->id)->count();
     }
 
     public function updatequantity($qty_id, $scope)
