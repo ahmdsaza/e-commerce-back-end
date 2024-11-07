@@ -54,13 +54,11 @@ class CouponController extends Controller
             'start_date' => 'required',
             'expire_date' => 'required'
         ]);
-        $coupon->update([
-            'title' => $request->title,
-            'percent' => $request->percent,
-            'lowest_price' => $request->lowest_price,
-            'start_date' => $request->start_date,
-            'expire_date' => $request->expire_date
-        ]);
+        $coupon->title = $request->title;
+        $coupon->percent = $request->percent;
+        $coupon->lowest_price = $request->lowest_price;
+        $coupon->start_date = $request->start_date;
+        $coupon->expire_date = $request->expire_date;
         $coupon->save();
     }
     public function destroy($id)
