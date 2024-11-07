@@ -44,6 +44,25 @@ class CouponController extends Controller
         $coupon->expire_date = $request->expire_date;
         $coupon->save();
     }
+    public function editcoupon(Request $request)
+    {
+        $coupon = new Coupon();
+        $request->validate([
+            'title' => 'required',
+            'percent' => 'required',
+            'lowest_price' => 'required',
+            'start_date' => 'required',
+            'expire_date' => 'required'
+        ]);
+        $coupon->update([
+            'title' => $request->title,
+            'percent' => $request->percent,
+            'lowest_price' => $request->lowest_price,
+            'start_date' => $request->start_date,
+            'expire_date' => $request->expire_date
+        ]);
+        $coupon->save();
+    }
     public function destroy($id)
     {
         return Coupon::findOrFail($id)->delete();

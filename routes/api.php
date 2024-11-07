@@ -99,6 +99,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/coupon', [CouponController::class, 'index']);
     Route::get('/coupon/{id}', [CouponController::class, 'show']);
     Route::get('/coupon/check/{id}', [CouponController::class, 'checkcoupon']);
+    Route::put('/coupon/edit/{id}', [CouponController::class, 'editcoupon']);
     Route::post('/coupon/add', [CouponController::class, 'store']);
     Route::delete('/coupon/delete/{id}', [CouponController::class, 'destroy']);
 
