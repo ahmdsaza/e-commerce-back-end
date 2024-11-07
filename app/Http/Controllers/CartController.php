@@ -30,13 +30,13 @@ class CartController extends Controller
             $product_qty = $request->product_qty;
 
             // call database
-            $product_qty_check = Size::where('id', $product_size)->where('product_id', $product_id)->first();
-            $upadte_qty = Cart::where('user_id', $user_id)->where('product_id', $product_id)->where('product_size', $product_size)->first();
+            $product_qty_check = Size::where('id', $product_size)->first();
 
             $call_product_qty_check = $product_qty_check->quantity;
 
             if ($call_product_qty_check >= $product_qty) {
 
+                $upadte_qty = Cart::where('user_id', $user_id)->where('product_size', $product_size)->first();
                 if ($upadte_qty) {
                     $upadte_qty_count = $upadte_qty->product_qty + $product_qty;
 
