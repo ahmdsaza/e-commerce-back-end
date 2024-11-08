@@ -44,9 +44,8 @@ class CouponController extends Controller
         $coupon->expire_date = $request->expire_date;
         $coupon->save();
     }
-    public function editcoupon(Request $request)
+    public function editcoupon(Request $request, $id)
     {
-        $coupon = new Coupon();
         $request->validate([
             'title' => 'required',
             'percent' => 'required',
@@ -54,6 +53,8 @@ class CouponController extends Controller
             'start_date' => 'required',
             'expire_date' => 'required'
         ]);
+
+        $coupon = Coupon::findOrFail($id);
         $coupon->title = $request->title;
         $coupon->percent = $request->percent;
         $coupon->lowest_price = $request->lowest_price;

@@ -95,11 +95,13 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/last-order', [OrderController::class, 'lastorders']);
     Route::post('/orders/edit/{id}', [OrderController::class, 'update']);
     Route::delete('/order/{id}', [OrderController::class, 'destroy']);
+    Route::post('/order/cancel/{id}', [OrderController::class, 'cancelorder']);
 
     // Showing Orders
     Route::get('/get-order-count', [OrderController::class, 'showorderscount']);
 
     // Banners
+    Route::get('/banner/showindashboard', [BannerController::class, 'showindashboard']);
     Route::get('/banner/show/{id}', [BannerController::class, 'showbanner']);
     Route::post('/banner/add', [BannerController::class, 'create']);
     Route::post('/banner/edit/{id}', [BannerController::class, 'update']);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\OrderItems;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -55,6 +56,13 @@ class OrderController extends Controller
         $order->save();
     }
 
+    public function cancelorder(Request $request, $id)
+    {
+        $order = Order::where('slug', $id)->first();
+        $order->status = 5;
+        $order->save();
+    }
+
     // Showing Orders
 
     public function showorderscount()
@@ -66,7 +74,7 @@ class OrderController extends Controller
         $ordersCancelled = Order::where('status', '=', '5')->count();
 
         // Total Amount
-        $ordersAmount = Order::where('status', '!=', '5')->sum('totalprice');
+        $ordersAmount = Order::where('status', '!=', '5')->sum('totalprice') - $ordersAmount = Payment::sum('fees');
         $ordersPendingAmount = Order::where('status', '=', '0')->sum('totalprice');
         $ordersCompletedAmount = Order::where('status', '=', '3')->sum('totalprice');
         $ordersCancelledAmount = Order::where('status', '=', '5')->sum('totalprice');
