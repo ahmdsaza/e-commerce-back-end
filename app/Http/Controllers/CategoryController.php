@@ -64,9 +64,7 @@ class CategoryController extends Controller
 
     public function showcategory(Request $request, $id)
     {
-
-        $finalResult = Category::findOrFail($id);
-        return $finalResult;
+        return  Category::findOrFail($id);
     }
 
     public function productsCategory(Category $category, $id)

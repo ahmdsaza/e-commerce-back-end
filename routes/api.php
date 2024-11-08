@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
@@ -55,6 +56,9 @@ Route::get('/product/showRelated/{id}', [ProductController::class, 'showRelated'
 Route::get('/product-category/{id}', [ProductController::class, 'showCategory']);
 Route::post('/product/search', [ProductController::class, 'search']);
 
+// Banners
+Route::get('/banner', [BannerController::class, 'index']);
+
 // Rates
 Route::get('/rate', [RateController::class, 'index']);
 Route::post('/rate/add', [RateController::class, 'store']);
@@ -94,6 +98,12 @@ Route::middleware('auth:api')->group(function () {
 
     // Showing Orders
     Route::get('/get-order-count', [OrderController::class, 'showorderscount']);
+
+    // Banners
+    Route::get('/banner/show/{id}', [BannerController::class, 'showbanner']);
+    Route::post('/banner/add', [BannerController::class, 'create']);
+    Route::post('/banner/edit/{id}', [BannerController::class, 'update']);
+    Route::delete('/banner/delete/{id}', [BannerController::class, 'destroy']);
 
     // Coupon
     Route::get('/coupon', [CouponController::class, 'index']);
