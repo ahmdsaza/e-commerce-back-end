@@ -10,7 +10,7 @@ class BannerController extends Controller
 {
     public function index(Request $request)
     {
-        return Banner::get();
+        return Banner::where('status', 1)->get();
     }
 
     public function showindashboard(Request $request)
@@ -28,9 +28,13 @@ class BannerController extends Controller
         $banner = new Banner();
         $request->validate([
             'image' => 'required|image',
-            'url' => 'required'
+            'url' => 'required',
+            'status' => 'required',
+            'description' => 'required'
         ]);
         $banner->url = $request->url;
+        $banner->status = $request->status;
+        $banner->description = $request->description;
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $filename = date('YmdHis') . '.' . $file->getClientOriginalExtension();
@@ -46,8 +50,12 @@ class BannerController extends Controller
         $banner = Banner::findOrFail($id);
         $request->validate([
             'url' => 'required',
+            'description' => 'required',
+            'status' => 'required',
         ]);
         $banner->url = $request->url;
+        $banner->status = $request->status;
+        $banner->description = $request->description;
         if ($request->hasFile('image')) {
             $oldpath = public_path() . '/images/' . substr($banner['image'], strrpos($banner['image'], '/') + 1);
 
@@ -61,7 +69,6 @@ class BannerController extends Controller
             $file->move($path, $filename);
         }
         $banner->save();
-        return Banner::orderBy('id', 'DESC')->get();
     }
 
     public function destroy(Request $request, $id)
