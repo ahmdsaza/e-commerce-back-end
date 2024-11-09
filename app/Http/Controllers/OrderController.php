@@ -74,7 +74,7 @@ class OrderController extends Controller
         $ordersCancelled = Order::where('status', '=', '5')->count();
 
         // Total Amount
-        $ordersAmount = Order::where('status', '!=', '5')->sum('totalprice') - $ordersAmount = Payment::sum('fees');
+        $ordersAmount = Order::where('status', '!=', '5')->sum('totalprice');
         $ordersPendingAmount = Order::where('status', '=', '0')->sum('totalprice');
         $ordersCompletedAmount = Order::where('status', '=', '3')->sum('totalprice');
         $ordersCancelledAmount = Order::where('status', '=', '5')->sum('totalprice');
