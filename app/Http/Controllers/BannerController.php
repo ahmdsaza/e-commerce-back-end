@@ -30,7 +30,6 @@ class BannerController extends Controller
             'image' => 'required|image',
             'url' => 'required',
             'status' => 'required',
-            'description' => 'required'
         ]);
         $banner->url = $request->url;
         $banner->status = $request->status;

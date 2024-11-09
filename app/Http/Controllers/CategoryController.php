@@ -57,7 +57,7 @@ class CategoryController extends Controller
 
         $allproducts = Product::where('category', $id)->with('Images')->orderBy('id', 'DESC')->where('status', '=', 'published')->get();
         // $products = Product::where('category', $id)->with('Images')->where('status', '=', 'published')->paginate($request->input('limit', 10));
-        $productsSort = Product::where('category', $id)->with('Images')->where('status', '=', 'published')->orderBy('id', 'DESC')->orderBy($request->input('sort'), $request->input('type'))->paginate($request->input('limit', 10));
+        $productsSort = Product::where('category', $id)->with('Images')->where('status', '=', 'published')->orderBy($request->input('sort'), $request->input('type'))->paginate($request->input('limit', 10));
         $finalResult = $request->input('sort') ? $productsSort : $allproducts;
         return $finalResult;
     }
