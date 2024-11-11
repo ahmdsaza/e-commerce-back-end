@@ -32,6 +32,14 @@ class ProductController extends Controller
         return $products;
     }
 
+    public function getAllLastSaleProducts(Request $request)
+    {
+        $allProducts = Product::with('Images')->orderBy('id', 'DESC')->with('Rate')->where('status', '=', 'published')->get();
+        $products = Product::with('Images')->with('Rate')->where('status', '=', 'published')->where('discount', '>', '0')->orderBy($request->input('sort'), $request->input('type'))->paginate($request->input('limit', 8));
+        $finalResult = $request->input('limit') ? $products : $allProducts;
+        return $finalResult;
+    }
+
 
     public function getLatest(Request $request)
     {
@@ -39,10 +47,28 @@ class ProductController extends Controller
         return $products;
     }
 
+    public function getAllLatest(Request $request)
+    {
+        $allProducts = Product::with('Images')->with('Rate')->orderBy('id', 'DESC')->where('status', '=', 'published')->latest()->take(8)->get();
+        $products = Product::with('Images')->with('Rate')->where('status', '=', 'published')->orderBy('id', 'DESC')->paginate($request->input('limit', 8));
+        // $productscall = $products->orderBy($request->input('sort'), $request->input('type'))->paginate($request->input('limit', 8));
+        // $productscall = Product::with('Images')->with('Rate')->where('status', '=', 'published')->orderBy($request->input('sort'), $request->input('type'))->paginate($request->input('limit', 8));
+        $finalResult = $request->input('limit') ? $products : $allProducts;
+        return $finalResult;
+    }
+
     public function getTopRated(Request $request)
     {
         $products = Product::with('Images')->with('Rate')->where('status', '=', 'published')->where('rating', '>=', '4.5')->latest()->take(8)->get();
         return $products;
+    }
+
+    public function getAllTopRated(Request $request)
+    {
+        $allProducts = Product::with('Images')->with('Rate')->where('status', '=', 'published')->where('rating', '>=', '4.5')->latest()->take(8)->get();
+        $products = Product::with('Images')->with('Rate')->where('status', '=', 'published')->where('rating', '>=', '4.5')->orderBy($request->input('sort'), $request->input('type'))->paginate($request->input('limit', 8));;
+        $finalResult = $request->input('limit') ? $products : $allProducts;
+        return $finalResult;
     }
 
 

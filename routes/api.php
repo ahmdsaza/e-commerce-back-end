@@ -48,8 +48,11 @@ Route::get('/categorry/{id}', [CategoryController::class, 'productsCategory']);
 
 // Products
 Route::get('/latest-sale', [ProductController::class, 'getLastSaleProducts']);
+Route::get('/all-latest-sale', [ProductController::class, 'getAllLastSaleProducts']);
 Route::get('/latest', [ProductController::class, 'getLatest']);
+Route::get('/all-latest', [ProductController::class, 'getAllLatest']);
 Route::get('/top-rated', [ProductController::class, 'getTopRated']);
+Route::get('/all-top-rated', [ProductController::class, 'getAllTopRated']);
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/product/{id}', [ProductController::class, 'show']);
 Route::get('/product/showRelated/{id}', [ProductController::class, 'showRelated']);

@@ -49,7 +49,6 @@ class BannerController extends Controller
         $banner = Banner::findOrFail($id);
         $request->validate([
             'url' => 'required',
-            'description' => 'required',
             'status' => 'required',
         ]);
         $banner->url = $request->url;
