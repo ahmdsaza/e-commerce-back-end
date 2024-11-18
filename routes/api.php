@@ -13,7 +13,6 @@ use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\RateController;
 use App\Http\Controllers\socialAuthController;
 use App\Http\Controllers\UsersContoller;
-use App\Models\Address;
 use Illuminate\Support\Facades\Route;
 
 /*

@@ -53,14 +53,9 @@ class CartController extends Controller
                 $cartitem->save();
             }
         } else {
-            return "some thing went wrong";
+            return "something went wrong";
         }
     }
-
-    // } else {
-    //     return response()->json(['status' => 401, 'meassge' => 'Login to Add to Cart']);
-    // }
-
 
     public function cartlength()
     {

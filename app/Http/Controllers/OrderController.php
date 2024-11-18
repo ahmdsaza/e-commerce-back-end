@@ -14,11 +14,12 @@ class OrderController extends Controller
 {
     public function index(Request $request)
     {
+        // $user_id = Auth::user()->id;
         $user_id = Auth::user()->id;
-        $allorders = Order::with('OrderItems')->orderBy('id', 'DESC')->where('user_id', $user_id)->get();
-        $orders = Order::with('OrderItems')->where('user_id', $user_id)->orderBy('id', 'DESC')->paginate($request->input('limit', 10));
-        $finalResult = $request->input('limit') ? $orders : $allorders;
-        return $finalResult;
+        $orders = Order::with('OrderItems')->with('users')->where('user_id', $user_id)->with('Payment')->orderBy('id', 'DESC')->paginate($request->input('limit', 10));
+        // $query = $request->input('status');
+        $orderssort = Order::with('OrderItems')->where('user_id', $user_id)->with('users')->with('Payment')->where('status', '=', $request->input('status'))->orderBy('id', 'desc')->paginate($request->input('limit', 10));
+        return $request->input('status') ? $orderssort : $orders;
 
         // return $allorders;
     }
@@ -29,9 +30,9 @@ class OrderController extends Controller
     public function showorders(Request $request)
     {
         $orders = Order::with('OrderItems')->with('users')->with('Payment')->orderBy('id', 'DESC')->paginate($request->input('limit', 10));
-        $query = $request->input('status');
-        $orderssort = Order::with('OrderItems')->with('users')->with('Payment')->where('status', '=', $query)->orderBy('id', 'desc')->paginate($request->input('limit', 10));
-        return $query ? $orderssort : $orders;
+        // $query = $request->input('status');
+        $orderssort = Order::with('OrderItems')->with('users')->with('Payment')->where('status', '=', $request->input('status'))->orderBy('id', 'desc')->paginate($request->input('limit', 10));
+        return $request->input('status') ? $orderssort : $orders;
     }
 
     public function lastorders()
